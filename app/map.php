@@ -1,3 +1,29 @@
+<?php
+    if(isset($_GET['id'])) {
+        $username = "root";
+        $password = "vertrigo";
+        $hostname = "localhost"; 
+
+        //connection to the database
+        $connection = mysqli_connect($hostname, $username, $password, 'road');
+
+        if ($connection->connect_error) {
+            die("Connection failed: " . $connection->connect_error);
+        } 
+        
+        $id = $_GET['id'];
+        
+        
+        $sql = "SELECT * FROM maps WHERE map_id = $id";
+        $res = $connection->query($sql);
+        
+        while($rows[] = mysqli_fetch_assoc($res));
+            array_pop($rows);
+            
+        
+        
+    }
+?>
 <!DOCTYPE html />
 <html>
 <head>
@@ -8,6 +34,7 @@
 <script type="text/javascript">
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
+    
 function initialize() {
   var latlng = new google.maps.LatLng(51.764696,5.526042);
   // set direction render options
@@ -35,16 +62,38 @@ function calcRoute() {
   var travelMode = "WALKING";
 
   var waypoints = []; // init an empty waypoints array
-    var points = ["Kherson","Lublin"];
-    var end = "51.764696,5.526042";
-    var start = "50.764696,13.526042";
+    var points = [];
     
- for (var i = 0; i < 2; i++) {
-      waypoints.push({
-          location: points[i],
-          stopover: true
-        });
+
+    var jqueryarray = <?php echo json_encode($rows); ?>;
+
+    var size = <?php echo $res->num_rows ?>;
+    size = parseInt(size) - 1;
+    var start = jqueryarray[0]['lat']+','+jqueryarray[0]['lng'];
+    var end = jqueryarray[size]['lat']+','+jqueryarray[size]['lng'];
+    
+    
+//    console.log(start);
+//    console.log(end);
+    
+    
+    
+    
+ for (var i = 0; i <= size; i++) {
+     points.push(jqueryarray[i]['lat']+','+jqueryarray[i]['lng']);
   }
+    points.splice(-1,1);
+    points.splice(1,1);
+    
+     for (var i = 0; i < points.length; i++) {
+          waypoints.push({
+              location: points[i],
+              stopover: true
+            });
+     }
+
+//    console.log(waypoints);
+//    console.log(points);
     
     
   var request = {

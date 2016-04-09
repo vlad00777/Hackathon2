@@ -1,6 +1,5 @@
 <?php
 
-var_dump($_POST['data']);
 $username = "root";
 $password = "vertrigo";
 $hostname = "localhost"; 
@@ -19,7 +18,7 @@ $row = mysqli_fetch_assoc($id);
 if($row['id'] == null) {
     $mid = 1;
 } else{
-    $mid = $row['id'] + 1;
+    $mid = $row['id'];
 }
 
 for($i = 0; $i<count ($_POST['data']); $i++) {
