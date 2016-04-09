@@ -67,8 +67,47 @@ $(document).ready(function () {
         
         if (completeFiles === totalFiles) {
             
-        
-            console.log(arrObjects);
+            var lat, lng;
+            var h,m,s,ii;
+            var markers =[];
+            
+            for(ii=0;ii<totalFiles;ii++){
+            
+            h =  arrObjects[ii]['GPSLatitude'][0].split("/");
+            m =  arrObjects[ii]['GPSLatitude'][1].split("/");
+            s =  arrObjects[ii]['GPSLatitude'][2].split("/");
+            var nh = parseInt(h[0]);
+            var nm = parseInt(m[0]);
+            var ns = parseInt(s[0])/10000;
+            lat = nh + (nm / 60) + (ns / 3600);
+            
+            h =  arrObjects[ii]['GPSLongitude'][0].split("/");
+            m =  arrObjects[ii]['GPSLongitude'][1].split("/");
+            s =  arrObjects[ii]['GPSLongitude'][2].split("/");
+            var nh = parseInt(h[0]);
+            var nm = parseInt(m[0]);
+            var ns = parseInt(s[0])/10000;
+            lng = nh + (nm / 60) + (ns / 3600);
+            
+            var datetime = arrObjects[ii]['datetime'];
+            
+            markers[ii] = [lat,lng,datetime];
+                
+                }
+
+             $.ajax({
+                    url: "add_map.php",
+                    type: "post",
+                    data: {data: markers},
+                    success: function (response) {
+                       alert('zbs');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                       alert('xyinia');
+                    }
+            });
+            
+            
         }
 
     });

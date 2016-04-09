@@ -18,12 +18,14 @@ if (!empty($_FILES)) {
     	
     $exif = exif_read_data($targetFile, NULL, true, true);
     
+    if($exif['GPS']) {
         $array = array(
             'GPSLatitude' => $exif['GPS']['GPSLatitude'],
             'GPSLongitude' => $exif['GPS']['GPSLongitude'],
             'datetime' => $exif['EXIF']['DateTimeOriginal']   
         );
-    echo json_encode($array);
+        echo json_encode($array);
+    }
     //var_dump($exif);
      
 }
