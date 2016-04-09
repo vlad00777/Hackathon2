@@ -43,9 +43,10 @@
     <script>!function(t){function r(){var t=navigator.userAgent,r=!window.addEventListener||t.match(/(Android (2|3|4.0|4.1|4.2|4.3))|(Opera (Mini|Mobi))/)&&!t.match(/Chrome/);if(r)return!1;var e="test";try{return localStorage.setItem(e,e),localStorage.removeItem(e),!0}catch(o){return!1}}t.localSupport=r(),t.localWrite=function(t,r){try{localStorage.setItem(t,r)}catch(e){if(e==QUOTA_EXCEEDED_ERR)return!1}}}(window);
     </script>
     <script src="js/modernizr.js"></script>
-    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!--build:js js/main.min.js -->
-    <script src="js/plugins.js"></script>
+    <script src="js/exif.js"></script>
+    <script src="js/dropzone.js"></script>
     <script src="js/init.js"></script>
     <!-- endbuild -->
     
@@ -56,6 +57,10 @@
         <header class="wHeader">
         </header>
         <!-- .wHeader -->
+        <div class="wContent">
+            <form enctype="multipart/form-data" action="photos.php" method="Post" class="dropzone"></form>
+
+        </div>
     <!-- .wWrapper -->
     <footer class="wFooter">
         <div class="wSize">
