@@ -1,4 +1,5 @@
 <?php
+
     if(isset($_GET['id'])) {
         $username = "root";
         $password = "vertrigo";
@@ -14,7 +15,7 @@
         $id = $_GET['id'];
         
         
-        $sql = "SELECT * FROM maps WHERE map_id = $id";
+        $sql = "SELECT * FROM maps WHERE map_id = $id ORDER BY datetime ASC";
         $res = $connection->query($sql);
         
         while($rows[] = mysqli_fetch_assoc($res));
@@ -23,6 +24,7 @@
         
         
     }
+
 ?>
 <!DOCTYPE html />
 <html>
@@ -30,7 +32,8 @@
 <title>Extensive Google Maps Directions demo</title>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+  <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript">
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
@@ -51,11 +54,26 @@ function initialize() {
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById("directionsPanel"));
   // Add a marker to the map for the end-point of the directions.
-  var marker = new google.maps.Marker({
-    position: latlng, 
-    map: map, 
-    title:"Rodderhof, Oss"
-  }); 
+    
+    var jqueryarray = <?php echo json_encode($rows); ?>;
+    
+    for(var i = 0; i<jqueryarray.length;i++) {
+        var myLatlng = new google.maps.LatLng(parseFloat(jqueryarray[i]['lat']),parseFloat(jqueryarray[i]['lng']));
+    
+          var request = {
+            location: myLatlng,
+            radius: '5',
+            type:['bar','beauty_salon','cafe','spa']
+          };
+
+          service = new google.maps.places.PlacesService(map);
+          service.textSearch(request, callback);
+    }
+    
+    
+    
+    
+
 }
 function calcRoute() {
   // get the travelmode, startpoint and via point from the form   
@@ -63,7 +81,7 @@ function calcRoute() {
 
   var waypoints = []; // init an empty waypoints array
     var points = [];
-    
+    var summtime = 0;
 
     var jqueryarray = <?php echo json_encode($rows); ?>;
 
@@ -72,18 +90,23 @@ function calcRoute() {
     var start = jqueryarray[0]['lat']+','+jqueryarray[0]['lng'];
     var end = jqueryarray[size]['lat']+','+jqueryarray[size]['lng'];
     
+    summtime = jqueryarray[0]['datetime'] - jqueryarray[size]['datetime'];
     
-//    console.log(start);
-//    console.log(end);
+    console.log(jqueryarray[0]['datetime']);
+    
+//   console.log(jqueryarray);
+//   console.log(start);
+//   console.log(end);
     
     
     
     
  for (var i = 0; i <= size; i++) {
      points.push(jqueryarray[i]['lat']+','+jqueryarray[i]['lng']);
+     
   }
+    points.splice(0,1);
     points.splice(-1,1);
-    points.splice(1,1);
     
      for (var i = 0; i < points.length; i++) {
           waypoints.push({
@@ -92,41 +115,39 @@ function calcRoute() {
             });
      }
 
-//    console.log(waypoints);
-//    console.log(points);
+    //console.log(waypoints);
+    //console.log(points);
     
     
   var request = {
     origin: start,
     destination: end,
     waypoints: waypoints,
-    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    unitSystem: google.maps.UnitSystem.METRIC,
     travelMode: google.maps.DirectionsTravelMode[travelMode]
   };
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       $('#directionsPanel').empty(); // clear the directions panel before adding new directions
       directionsDisplay.setDirections(response);
-    } else {
-      // alert an error message when the route could nog be calculated.
-      if (status == 'ZERO_RESULTS') {
-        alert('No route could be found between the origin and destination.');
-      } else if (status == 'UNKNOWN_ERROR') {
-        alert('A directions request could not be processed due to a server error. The request may succeed if you try again.');
-      } else if (status == 'REQUEST_DENIED') {
-        alert('This webpage is not allowed to use the directions service.');
-      } else if (status == 'OVER_QUERY_LIMIT') {
-        alert('The webpage has gone over the requests limit in too short a period of time.');
-      } else if (status == 'NOT_FOUND') {
-        alert('At least one of the origin, destination, or waypoints could not be geocoded.');
-      } else if (status == 'INVALID_REQUEST') {
-        alert('The DirectionsRequest provided was invalid.');         
-      } else {
-        alert("There was an unknown error in your request. Requeststatus: nn"+status);
-      }
     }
   });
+    
+
+    
 }
+var c = 0;
+function callback(results, status) {
+    
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+      var place = results[0];
+        console.log(place);
+      $("#place"+c).find('.name').html(place['formatted_address']);
+        c++;
+  }
+}
+    
+    
     
     $(window).load(function(){
         calcRoute();
@@ -134,9 +155,24 @@ function calcRoute() {
 </script>
 </head>
 <body onLoad="initialize()">
-  <div id="map_canvas" style="width:100%; height:600px"></div>    
-  <div id="directionsPanel">
+ <div id="map2"></div>
+  <div id="map_canvas" style="width:100%; height:600px"></div>   
+  <div class="block"> 
+  <div id="directionsPanel" class="lr">
     Enter a destination and click "Calculate route".
+  </div>
+  <div class="lr places">
+      <?php 
+        for($i = 0; $i<count($rows); $i++){
+            $lat = $rows[$i]['lat'];
+            $lng = $rows[$i]['lng']; ?>
+            <div id="place<?php echo $i; ?>">
+            <p class="name"></p>
+            <img src='https://maps.googleapis.com/maps/api/streetview?size=450x300&location=<?php echo $lat?>,<?php echo $lng?>&key=AIzaSyAeiDYGyarnWalSY8SQCIxxhoy-8Qq541c'>
+            </div>
+        <?php }
+      ?>
+  </div>
   </div>
 </body>
 </html>

@@ -42,6 +42,8 @@ for($i = 0; $i<count ($_POST['data']); $i++) {
 
 }
 
+echo $mid;
+
 $connection->close();
 
 ?>

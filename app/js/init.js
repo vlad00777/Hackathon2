@@ -100,7 +100,8 @@ $(document).ready(function () {
                     type: "post",
                     data: {data: markers},
                     success: function (response) {
-                       alert('zbs');
+                        location.href = "map.php?id="+response;
+                       
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                        alert('xyinia');
@@ -111,6 +112,8 @@ $(document).ready(function () {
         }
 
     });
+    
+    
     
 
 
