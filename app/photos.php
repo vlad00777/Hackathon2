@@ -3,6 +3,7 @@
 $ds          = DIRECTORY_SEPARATOR;  //1
  
 $storeFolder = 'uploads';   //2
+
  
 if (!empty($_FILES)) {
      
@@ -15,8 +16,15 @@ if (!empty($_FILES)) {
     move_uploaded_file($tempFile,$targetFile); //6
     
     	
-    $exif = exif_read_data($targetFile, $sections, $arrays, $thumbnail);
-    var_dump($exif);
+    $exif = exif_read_data($targetFile, NULL, true, true);
+    
+        $array = array(
+            'GPSLatitude' => $exif['GPS']['GPSLatitude'],
+            'GPSLongitude' => $exif['GPS']['GPSLongitude'],
+            'datetime' => $exif['EXIF']['DateTimeOriginal']   
+        );
+    echo json_encode($array);
+    //var_dump($exif);
      
 }
 
