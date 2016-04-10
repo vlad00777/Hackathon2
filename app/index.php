@@ -42,6 +42,7 @@
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script>!function(t){function r(){var t=navigator.userAgent,r=!window.addEventListener||t.match(/(Android (2|3|4.0|4.1|4.2|4.3))|(Opera (Mini|Mobi))/)&&!t.match(/Chrome/);if(r)return!1;var e="test";try{return localStorage.setItem(e,e),localStorage.removeItem(e),!0}catch(o){return!1}}t.localSupport=r(),t.localWrite=function(t,r){try{localStorage.setItem(t,r)}catch(e){if(e==QUOTA_EXCEEDED_ERR)return!1}}}(window);
     </script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <script src="js/modernizr.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!--build:js js/main.min.js -->
@@ -55,20 +56,19 @@
 </head>
 
 <body>
-    <div class="wWrapper">
-        <header class="wHeader">
-        </header>
-        <!-- .wHeader -->
-        <div class="wContent">
-            <form enctype="multipart/form-data" action="photos.php" method="Post" class="dropzone"></form>
+<a href="/" class="logo"><img src="images/logo.png" alt="logo">
+<span>Touristic road</span>
+</a>
 
-        </div>
-    <!-- .wWrapper -->
-    <footer class="wFooter">
-        <div class="wSize">
-        </div>
-    </footer>
-    <!-- .wFooter -->
+<video autoplay loop muted poster="polina.jpg" id="bgvid">
+    <source src="video.webm" type="video/webm">
+    <source src="video.mp4" type="video/mp4">
+</video>
+
+<div class="bg"></div>
+
+<form enctype="multipart/form-data" action="photos.php" method="Post" class="dropzone"></form>
+
 </body>
 
 </html>

@@ -348,7 +348,7 @@
 }
 
 .dropzone .dz-preview .dz-details .dz-filename {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .dropzone .dz-preview .dz-details .dz-filename:hover span {
@@ -606,4 +606,110 @@
 
 .block{
     font-size: 0;
+}
+
+video#bgvid { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover; 
+}
+
+.bg{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 2;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover; 
+    background-color: rgba(0,0,0,0.7);
+}
+
+.dropzone{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 850px;
+    height: 230px;
+    z-index: 3;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    border:none;
+    //background: rgba(0,0,0,0.7);
+    background: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.dropzone .dz-message{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 36px;
+    margin: 0;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.5s ease;
+}
+
+.dropzone:hover .dz-message{
+    color: rgba(255,255,255,0.9);
+}
+
+.dropzone .dz-preview.dz-image-preview{
+    background: transparent;
+}
+
+.logo{
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    z-index: 5;
+    
+    display: block;
+    opacity: 0.9;
+    transition: opacity 0.5s ease;
+    &:hover{
+        opacity: 1;
+    }
+    img{
+        max-width: 100%;
+        float: left;
+        width: 120px;
+    }
+    span{
+        display: block;
+        float: left;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 36px;
+        margin: 6px 0 0 20px;
+        font-weight: 600;
+        color: rgba(255,255,255,1);
+        width: 100px;
+        line-height: 33px;
+    }
 }

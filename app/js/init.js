@@ -16,20 +16,12 @@ $(document).ready(function () {
     }
 
 
-    /*    document.getElementById("file-input").onchange = function (e) {
-            EXIF.getData(e.target.files[0], function () {
-                var gps = EXIF.getTag(this, "GPSLatitude");
-                var v1 = gps[2]['numerator'];
-                var v2 = gps[2]['denominator']
-                console.log(v1 / v2);
-            });
-        }*/
-
     Dropzone.autoDiscover = false;
 
     var md = new Dropzone(".dropzone", {
         url: "photos.php",
-        maxFilesize: "5"
+        maxFilesize: "23",
+        minFilesize: "3"
     });
 
     var completeFiles = 0;
@@ -100,7 +92,8 @@ $(document).ready(function () {
                     type: "post",
                     data: {data: markers},
                     success: function (response) {
-                        location.href = "map.php?id="+response;
+                        setTimeout(function(){location.href = 'map.php?id='+response} , 2000);
+                        
                        
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
