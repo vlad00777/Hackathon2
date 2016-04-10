@@ -65,9 +65,51 @@
     <source src="video.mp4" type="video/mp4">
 </video>
 
-<div class="bg"></div>
+<div class="bg">
+  <div class="absolute">
+  <p class="title">Select your city and road time</p>
+   <form action="list.php" method="get" class="inputs">
+       <select name="city" id="city">
+           <option value="Lublin">Lublin</option>
+       </select>
+       <select name="time" id="time">
+           <option value="01:00:00">1 Hour</option>
+           <option value="01:30:00">1.5 Hour</option>
+           <option value="02:00:00">2 Hour</option>
+           <option value="02:30:00">2.5 Hour</option>
+           <option value="03:00:00">3 Hour</option>
+           <option value="03:30:00">3.5 Hour</option>
+           <option value="04:00:00">4 Hour</option>
+           <option value="04:30:00">4.5 Hour</option>
+           <option value="05:00:00">5 Hour</option>
+           <option value="06:00:00">6 Hour</option>
+           <option value="07:00:00">7 Hour</option>
+           <option value="08:00:00">8 Hour</option>
+           <option value="09:00:00">9 Hour</option>
+           <option value="10:00:00">10 Hour</option>
+           <option value="11:00:00">11 Hour</option>
+           <option value="12:00:00">12 Hour</option>
+           <option value="13:00:00">13 Hour</option>
+           <option value="14:00:00">14 Hour</option>
+           <option value="15:00:00">15 Hour</option>
+           <option value="16:00:00">16 Hour</option>
+           <option value="17:00:00">17 Hour</option>
+           <option value="18:00:00">18 Hour</option>
+           <option value="19:00:00">19 Hour</option>
+           <option value="20:00:00">20 Hour</option>
+           <option value="21:00:00">21 Hour</option>
+           <option value="22:00:00">22 Hour</option>
+           <option value="23:00:00">23 Hour</option>
+       </select>
+       <input type="submit" value="Search" id="sub">
+       
+   </form>
+   <p class="or">OR</p>
+    <form enctype="multipart/form-data" action="photos.php" method="Post" class="dropzone"></form>
+    </div>
+</div>
 
-<form enctype="multipart/form-data" action="photos.php" method="Post" class="dropzone"></form>
+
 
 </body>
 
